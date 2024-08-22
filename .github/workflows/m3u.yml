@@ -17,22 +17,46 @@ jobs:
       with:
         ref: main
 
-    - name: Update IPV4_M3U Files
+    - name: Download IPV4 MU3 File
       run: |
-        rm -f public/ipv4.m3u && wget https://live.fanmingming.com/tv/m3u/index.m3u -O public/ipv4.m3u
-        git config --local user.name "github-actions[bot]"
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git add public/ipv4.m3u
-        git commit -m "m3u Automatic Update."
-    - name: Update IPV6_M3U Files
+        wget https://live.fanmingming.com/tv/m3u/index.m3u -O public/ipv4.m3u
+    - name: Calculate Hash of Downloaded IPV4 MU3 File
       run: |
-        rm -f public/ipv6.m3u && wget https://live.fanmingming.com/tv/m3u/ipv6.m3u -O public/ipv6.m3u
-        git config --local user.name "github-actions[bot]"
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git add public/ipv6.m3u
-        git commit -m "m3u Automatic Update."
+        SHA256=$(sha256sum ipv4.m3u | awk '{print $1}')
+        echo "Downloaded file SHA256: $SHA256"
+    - name: Calculate Hash of Repository File
+      run: |
+        REPO_SHA256=$(sha256sum $(pwd)/public/ipv4.m3u | awk '{print $1}')
+        echo "Repository file SHA256: $REPO_SHA256"
+    - name: Compare Hashes
+      if: steps.compare_hashes.outputs.hashes-match == 'true'
+      run: |
+          echo "Files are identical"
+    - name: Compare Hashes
+      id: compare_hashes
+      run: |
+        if [ "$SHA256" == "$REPO_SHA256" ]; then
+          echo "::set-output name=hashes-match::true"
+        else
+          echo "::set-output name=hashes-match::false"
+        fi
 
-    - name: Push changes
-      run: git push -f origin main || echo "No changes to commit"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #- name: Update IPV4_M3U Files
+    #  run: |
+    #    rm -f public/ipv4.m3u && wget https://live.fanmingming.com/tv/m3u/index.m3u -O public/ipv4.m3u
+    #    git config --local user.name "github-actions[bot]"
+    #    git config --local user.email "github-actions[bot]@users.noreply.github.com"
+    #    git add public/ipv4.m3u
+    #    git commit -m "m3u Automatic Update."
+    #- name: Update IPV6_M3U Files
+    #  run: |
+    #    rm -f public/ipv6.m3u && wget https://live.fanmingming.com/tv/m3u/ipv6.m3u -O public/ipv6.m3u
+    #    git config --local user.name "github-actions[bot]"
+    #    git config --local user.email "github-actions[bot]@users.noreply.github.com"
+    #    git add public/ipv6.m3u
+    #    git commit -m "m3u Automatic Update."
+
+    #- name: Push Changes
+    #  run: git push -f origin main || echo "No changes to commit"
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
