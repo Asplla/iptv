@@ -29,16 +29,12 @@ jobs:
         REPO_SHA256=$(sha256sum $(pwd)/public/ipv4.m3u | awk '{print $1}')
         echo "Repository file SHA256: $REPO_SHA256"
     - name: Compare Hashes
-      if: steps.compare_hashes.outputs.hashes-match == 'true'
-      run: |
-          echo "Files are identical"
-    - name: Compare Hashes
       id: compare_hashes
       run: |
         if [ "$SHA256" == "$REPO_SHA256" ]; then
-          echo "::set-output name=hashes-match::true"
+          echo "true"
         else
-          echo "::set-output name=hashes-match::false"
+          echo "false"
         fi
 
     #- name: Update IPV4_M3U Files
