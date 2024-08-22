@@ -21,6 +21,7 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git add public/ipv4.m3u
         git commit -m "ipv4.m3u Automatic Update."
+        echo "ipv m3u file update successful"
     #- name: Update IPV6_M3U Files
     #  run: |
     #    rm -f /public/ipv6.m3u && wget https://live.fanmingming.com/tv/m3u/ipv6.m3u -O public/ipv6.m3u
