@@ -18,7 +18,6 @@ jobs:
       run: |
         wget --no-check-certificate -O public/ipv4.m3u https://live.fanmingming.com/tv/m3u/index.m3u || true
         wget --quiet --output-document=public/ipv4.m3u https://live.fanmingming.com/tv/m3u/index.m3u --no-if-modified-since
-        #rm -f /public/ipv4.m3u && wget https://live.fanmingming.com/tv/m3u/index.m3u -O public/ipv4.m3u
         git config --local user.name "github-actions[bot]"
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git add public/ipv4.m3u
