@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Update IPV4_M3U Files
       run: |
         rm -f public/ipv4.m3u && wget https://live.fanmingming.com/tv/m3u/index.m3u -O public/ipv4.m3u --no-if-modified-since
