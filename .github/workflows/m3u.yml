@@ -30,6 +30,6 @@ jobs:
         git commit -m "m3u and epg Automatic Update."
 
     - name: Push changes
-      run: git push -f origin main
+      run: git push -f origin main || echo "No changes to commit"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
