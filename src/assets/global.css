@@ -1,9 +1,5 @@
 @import './weui.css';
 
-@font-face {
-  font-family: BrandonText-Black;
-  src: url('@/assets/fonts/BrandonText-Black.otf')
-}
 :root {
   --weui-logo-icon: var(--td-brand-color);
   --weui-logo-text: #000427;
