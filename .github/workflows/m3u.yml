@@ -16,7 +16,6 @@ jobs:
     - uses: actions/checkout@v4
     - name: Update IPV4_M3U Files
       run: |
-      run: |
         # 删除原文件
         rm -f public/ipv4.m3u
         # 获取IPTV M3U文件
