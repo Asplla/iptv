@@ -26,7 +26,7 @@ jobs:
         git commit -m "ipv4.m3u Automatic Update." || echo "No changes to ipv4 commit"
     - name: Update IPV6_M3U Files
       run: |
-        rm -f public/ipv4.m3u
+        rm -f public/ipv6.m3u
         git clone --quiet https://github.com/fanmingming/live.git --depth 1 --branch main fanmingming
         cp -r fanmingming/tv/m3u/ipv6.m3u public/ipv6.m3u
         rm -rf fanmingming
