@@ -16,7 +16,14 @@ jobs:
     - uses: actions/checkout@v4
     - name: Update IPV4_M3U Files
       run: |
-        rm -f public/ipv4.m3u && wget https://fanmingming.github.io/live/tv/m3u/index.m3u -O public/ipv4.m3u --no-if-modified-since
+      run: |
+        # 删除原文件
+        rm -f public/ipv4.m3u
+        # 获取IPTV M3U文件
+        git clone --quiet https://github.com/fanmingming/live.git --depth 1 --branch main fanmingming
+        # 将M3U文件复制到本地路径
+        cp -r fanmingming/tv/m3u/index.m3u public/ipv4.m3u
+        rm -rf fanmingming
         git config --local user.name "github-actions[bot]"
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git add public/ipv4.m3u
